@@ -6,15 +6,15 @@
   
   <title>napi-rs 应用的调试问题解决 | 想自由</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="napi-rs 应用的调试问题解决这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。 开发环境  系统：osx m1  编辑器：vscode（插件：rust-analyzer、codeLLDB）  预置环境  node 和 npm 和 napi rust 和 cargo 和 rust-analyzer lldb    一、rspack 项目的 debu">
+  <meta name="description" content="这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。 开发环境  系统：osx m1  编辑器：vscode（插件：rust-analyzer、codeLLDB）  预置环境  node 和 npm 和 napi rust 和 cargo 和 rust-analyzer lldb    一、rspack 项目的 debug 失败根据 rspack 项目提">
 <meta property="og:type" content="article">
 <meta property="og:title" content="napi-rs 应用的调试问题解决">
 <meta property="og:url" content="http://example.com/2023/07/28/fix-napi-rs-debug/index.html">
 <meta property="og:site_name" content="想自由">
-<meta property="og:description" content="napi-rs 应用的调试问题解决这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。 开发环境  系统：osx m1  编辑器：vscode（插件：rust-analyzer、codeLLDB）  预置环境  node 和 npm 和 napi rust 和 cargo 和 rust-analyzer lldb    一、rspack 项目的 debu">
+<meta property="og:description" content="这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。 开发环境  系统：osx m1  编辑器：vscode（插件：rust-analyzer、codeLLDB）  预置环境  node 和 npm 和 napi rust 和 cargo 和 rust-analyzer lldb    一、rspack 项目的 debug 失败根据 rspack 项目提">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-28T15:34:30.000Z">
-<meta property="article:modified_time" content="2023-07-28T07:51:15.339Z">
+<meta property="article:modified_time" content="2023-07-28T09:16:55.879Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -97,7 +97,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="napi-rs-应用的调试问题解决"><a href="#napi-rs-应用的调试问题解决" class="headerlink" title="napi-rs 应用的调试问题解决"></a>napi-rs 应用的调试问题解决</h1><p>这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。</p>
+        <p>这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。</p>
 <p>开发环境</p>
 <ol>
 <li><p>系统：osx m1</p>
@@ -113,49 +113,49 @@
 </li>
 </ol>
 <h2 id="一、rspack-项目的-debug-失败"><a href="#一、rspack-项目的-debug-失败" class="headerlink" title="一、rspack 项目的 debug 失败"></a>一、rspack 项目的 debug 失败</h2><p>根据 rspack 项目提供的 contribute.md 中的流程，完成环境配置和项目的启动后，</p>
-<p>在<code>crates/node_binding/src/lib.rs</code>​的 Rspack 中的 new 方法打上 vscode 断点，</p>
+<p>在<code>crates/node_binding/src/lib.rs</code>​ 的 Rspack 中的 new 方法打上 vscode 断点，</p>
 <p>再打开 vscode 的 debug 栏，执行 debug-rspack-2 选项。</p>
 <p>结果 <code>$&#123;workspaceFolder&#125;/examples/angular</code>​ 目录成功完成了编译产出了 dist 目录，却没有进入我们的断点。</p>
 <p>很明显，该表现可以被描述为：程序能正常运行，但断点无法正常执行</p>
 <h2 id="二、建立最小可复现项目"><a href="#二、建立最小可复现项目" class="headerlink" title="二、建立最小可复现项目"></a>二、建立最小可复现项目</h2><p>rspack 项目依赖太多，内容太庞杂，可能产生影响的噪音元素也随之更多。已知 rspack 是通过 @napi&#x2F;rs 编译为 .node 文件而被 js 方调用，所以我们首先要验证一个最简单的基于 @napi&#x2F;rs 的项目能否正常 debug。</p>
-<p>首先使用 <code>napi</code>​命令初始化一个项目 <code>napi new</code>​</p>
+<p>首先使用 <code>napi</code>​ 命令初始化一个项目 <code>napi new</code>​</p>
 <blockquote>
-<p>什么？你还没有 napi 命令？先使用 <code>npm i @napi-rs/cli -g ​</code>​装一个吧，<a target="_blank" rel="noopener" href="https://napi.rs/docs/introduction/getting-started">官方文档</a></p>
+<p>什么？你还没有 napi 命令？先使用 <code>npm i @napi-rs/cli -g ​</code>​ 装一个吧，<a target="_blank" rel="noopener" href="https://napi.rs/docs/introduction/getting-started">官方文档</a></p>
 </blockquote>
-<p>在项目内根目录新建文件 <code>test.js</code>​，内容主要就是调一下<code>src/lib.rs</code>​里的方法即可。</p>
-<p>例如 <code>lib.rs</code>​内容是</p>
+<p>在项目内根目录新建文件 <code>test.js</code>​，内容主要就是调一下<code>src/lib.rs</code>​ 里的方法即可。</p>
+<p>例如 <code>lib.rs</code>​ 内容是</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#![deny(clippy::all)]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> napi_derive::napi;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[napi]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">sum</span>(a: <span class="type">i32</span>, b: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;</span><br><span class="line">  a + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>那么<code>test.js</code>​就是</p>
+<p>那么<code>test.js</code>​ 就是</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; sum &#125; <span class="keyword">from</span> <span class="string">&quot;./index.js&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">sum</span>(<span class="number">1</span>, <span class="number">2</span>));</span><br></pre></td></tr></table></figure>
 
 <p>然后编写 debug 配置。</p>
-<p>新建文件 <code>.vscode/tasks.json</code>​内容如下：</p>
+<p>新建文件 <code>.vscode/tasks.json</code>​ 内容如下：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;script&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build:debug&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm build:debug&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>新建文件 <code>.vscode/launch.json</code>​内容如下：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lldb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;sourceLanguages&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;rust&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;debug rust&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm build:debug&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;--inspect&quot;</span><span class="punctuation">,</span> <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">   <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>新建文件 <code>.vscode/launch.json</code>​ 内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lldb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;sourceLanguages&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;rust&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;debug rust&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm build:debug&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;--inspect&quot;</span><span class="punctuation">,</span> <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>之后在 <code>src/lib.rs</code>​的 sum 方法中打上断点。然后将当前窗口打开到<code>test.js</code>​后执行 debug 的 <code>debug rust</code>​ 选项。</p>
+<p>之后在 <code>src/lib.rs</code>​ 的 sum 方法中打上断点。然后将当前窗口打开到<code>test.js</code>​ 后执行 debug 的 <code>debug rust</code>​ 选项。</p>
 <p>没一会，控制台里输出了我们期待的结果 <code>3</code>​，却没有顺利进入断点。</p>
 <h2 id="三、尝试用-lldb-直接调试"><a href="#三、尝试用-lldb-直接调试" class="headerlink" title="三、尝试用 lldb 直接调试"></a>三、尝试用 lldb 直接调试</h2><p>为了验证是工具的问题，还是 vscode 的问题。我尝试跳过 vscode 使用命令行来进行 debug。已知 vscode 是使用 lldb 进行 debug 的，所以我在命令行里使用 lldb 进行 debug 应该原理是一样的。</p>
 <p>lldb 启动 debug 的方式：<code>lldb -- node test.mjs</code>​</p>
 <p>可惜查了很多资料，也没弄明白在 lldb 里怎么为 rs 文件打上断点。但起码 lldb 能正常运行，所以在 lldb 里出问题的可能性就很小了。</p>
 <h2 id="四、检查-rust-analyzer"><a href="#四、检查-rust-analyzer" class="headerlink" title="四、检查 rust-analyzer"></a>四、检查 rust-analyzer</h2><p>回想 vscode 执行 debug 的工具链：</p>
-<p>vscode  -&gt;  rust-analyzer -&gt; lldb</p>
-<p>既然 lldb 是好的，那下一步就应该验证一下 rust-analyzer 是否出了问题。验证方法也比较简单，我是对 lib.rs 执行 vscode 的命令: <code>rust-analyzer: Expand macro recursively</code>​ 发现返回内容是 <code>not available</code>​发现 rust-analyzer 可能不对劲。</p>
-<p>你也可以直接在命令行里执行 <code>rust-analyzer --help</code>​结果我这里直接报错说 rust-analyzer 版本和我的系统不匹配（我是 m1）。</p>
+<p>vscode -&gt; rust-analyzer -&gt; lldb</p>
+<p>既然 lldb 是好的，那下一步就应该验证一下 rust-analyzer 是否出了问题。验证方法也比较简单，我是对 lib.rs 执行 vscode 的命令: <code>rust-analyzer: Expand macro recursively</code>​ 发现返回内容是 <code>not available</code>​ 发现 rust-analyzer 可能不对劲。</p>
+<p>你也可以直接在命令行里执行 <code>rust-analyzer --help</code>​ 结果我这里直接报错说 rust-analyzer 版本和我的系统不匹配（我是 m1）。</p>
 <p>于是我通过官网重新安装了 rust-analyzer。（上一个有问题的版本的 rust-analyzer 好像是通过 vscode 的插件安装进来的）</p>
 <p>重启了 vscode 后再次验证 debug，结果依然失败。</p>
 <h2 id="五、山重水复疑无路"><a href="#五、山重水复疑无路" class="headerlink" title="五、山重水复疑无路"></a>五、山重水复疑无路</h2><p>之后这个问题继续困扰了我一下午。而在今天忙完手上的工作后，再试一下发现依然不行时，我的脑洞突然开了一下，想，重启一下试试，万一有用呢？</p>
 <p>嘿，没想到，结果重启了一下还真就行了。</p>
 <p>之前我一直对“重启试试”是不抱有好感的，结果今天才明白，老一辈人诚不欺我啊。</p>
-<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>所以针对 napi&#x2F;rs 在 vscode 中 debug 的问题，如果你按照教程安装了依赖、插件，声明了debug 配置，启动时仍然遇到无法 debug 的问题，建议检查一下 lldb 与 rust-analyzer 的版本是否匹配你的系统，如果不匹配，记得重新安装后重启下电脑喔！</p>
+<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>所以针对 napi&#x2F;rs 在 vscode 中 debug 的问题，如果你按照教程安装了依赖、插件，声明了 debug 配置，启动时仍然遇到无法 debug 的问题，建议检查一下 lldb 与 rust-analyzer 的版本是否匹配你的系统，如果不匹配，记得重新安装后重启下电脑喔！</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/28/fix-napi-rs-debug/" data-id="clkmabja30000ifop8osnd280" data-title="napi-rs 应用的调试问题解决" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      <a data-url="http://example.com/2023/07/28/fix-napi-rs-debug/" data-id="clkmddpjz0000fhooelfd00h1" data-title="napi-rs 应用的调试问题解决" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
       
       
       
@@ -163,16 +163,6 @@
   </div>
   
     
-<nav id="article-nav">
-  
-  
-    <a href="/2023/07/28/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
   
 </article>
 
@@ -207,10 +197,6 @@
         
           <li>
             <a href="/2023/07/28/fix-napi-rs-debug/">napi-rs 应用的调试问题解决</a>
-          </li>
-        
-          <li>
-            <a href="/2023/07/28/hello-world/">Hello World</a>
           </li>
         
       </ul>
