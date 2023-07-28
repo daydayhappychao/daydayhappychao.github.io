@@ -1,48 +1,103 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <link rel="alternate icon" type="image/png" href="/img/favicon.png">
-    <title>想自由 | </title>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>napi-rs 应用的调试问题解决 | 想自由</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="napi-rs 应用的调试问题解决这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。 开发环境  系统：osx m1  编辑器：vscode（插件：rust-analyzer、codeLLDB）  预置环境  node 和 npm 和 napi rust 和 cargo 和 rust-analyzer lldb    一、rspack 项目的 debu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="napi-rs 应用的调试问题解决">
+<meta property="og:url" content="http://example.com/2023/07/28/fix-napi-rs-debug/index.html">
+<meta property="og:site_name" content="想自由">
+<meta property="og:description" content="napi-rs 应用的调试问题解决这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。 开发环境  系统：osx m1  编辑器：vscode（插件：rust-analyzer、codeLLDB）  预置环境  node 和 npm 和 napi rust 和 cargo 和 rust-analyzer lldb    一、rspack 项目的 debu">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-28T15:34:30.000Z">
+<meta property="article:modified_time" content="2023-07-28T07:51:15.339Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="想自由" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
     
-<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-    
+  
+  
 <link rel="stylesheet" href="/css/style.css">
 
+  
     
-<link rel="stylesheet" href="/css/markdown.css">
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
-    
-<link rel="stylesheet" href="/css/fonts.css">
-
+  
+  
 <meta name="generator" content="Hexo 6.3.0"></head>
-    <body>
-        <div class="paper">
-            <div class="paper-main">
-                
-                    <div class="post-header">
-    <a class="logo" href="/">想自由</a>
-    <a class="go-home" href="/">
-        <svg width="8" height="14" viewBox="0 0 8 14">
-            <path d="M7 1L1 7l6 6" stroke="#000" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </a>
-</div>
-                
-                <div class="post-main">
 
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">想自由</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-fix-napi-rs-debug" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/28/fix-napi-rs-debug/" class="article-date">
+  <time class="dt-published" datetime="2023-07-28T15:34:30.000Z" itemprop="datePublished">2023-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
     
     
-        <div class="post-main-title">
-            napi-rs 应用的调试问题解决
-        </div>
-        <div class="post-meta">
-            2023-07-28
-        </div>
-        <div class="post-md">
-            <h1 id="napi-rs-应用的调试问题解决"><a href="#napi-rs-应用的调试问题解决" class="headerlink" title="napi-rs 应用的调试问题解决"></a>napi-rs 应用的调试问题解决</h1><p>这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。</p>
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      napi-rs 应用的调试问题解决
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="napi-rs-应用的调试问题解决"><a href="#napi-rs-应用的调试问题解决" class="headerlink" title="napi-rs 应用的调试问题解决"></a>napi-rs 应用的调试问题解决</h1><p>这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。</p>
 <p>开发环境</p>
 <ol>
 <li><p>系统：osx m1</p>
@@ -97,32 +152,113 @@
 <p>之前我一直对“重启试试”是不抱有好感的，结果今天才明白，老一辈人诚不欺我啊。</p>
 <h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>所以针对 napi&#x2F;rs 在 vscode 中 debug 的问题，如果你按照教程安装了依赖、插件，声明了debug 配置，启动时仍然遇到无法 debug 的问题，建议检查一下 lldb 与 rust-analyzer 的版本是否匹配你的系统，如果不匹配，记得重新安装后重启下电脑喔！</p>
 
-        </div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/28/fix-napi-rs-debug/" data-id="clkmabja30000ifop8osnd280" data-title="napi-rs 应用的调试问题解决" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/28/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
 
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
 
-</div>
-                <div class="footer">
-    <span>Copyright © 2022 想自由</span>
-    <span>Theme Designed By <a target="_blank" href="https://zheli.design/one-paper">這李設計</a></span>
-</div>
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li></ul>
+    </div>
+  </div>
 
 
-<link rel="stylesheet" href="/css/a11y-dark.min.css">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/28/fix-napi-rs-debug/">napi-rs 应用的调试问题解决</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/28/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
 
-<script src="/js/highlight.min.js"></script>
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
-<script src="/js/highlightjs-line-numbers.js"></script>
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
-<script>
-    hljs.initHighlightingOnLoad();
-    hljs.initLineNumbersOnLoad();
-</script>
 
-            </div>
-        </div>
-    </body>
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
 </html>
