@@ -4,8 +4,6 @@ date: 2023-07-28 15:34:30
 tags:
 ---
 
-# napi-rs 应用的调试问题解决
-
 这几天想通过 rspack 项目来学习一下 rust 应用的开发。没想到在起步阶段就踩了个大坑。
 
 开发环境
@@ -14,15 +12,15 @@ tags:
 2. 编辑器：vscode（插件：rust-analyzer、codeLLDB）
 3. 预置环境
 
-    1. node 和 npm 和 napi
-    2. rust 和 cargo 和 rust-analyzer
-    3. lldb
+   1. node 和 npm 和 napi
+   2. rust 和 cargo 和 rust-analyzer
+   3. lldb
 
 ## 一、rspack 项目的 debug 失败
 
 根据 rspack 项目提供的 contribute.md 中的流程，完成环境配置和项目的启动后，
 
-在`crates/node_binding/src/lib.rs`​的 Rspack 中的 new 方法打上 vscode 断点，
+在`crates/node_binding/src/lib.rs`​ 的 Rspack 中的 new 方法打上 vscode 断点，
 
 再打开 vscode 的 debug 栏，执行 debug-rspack-2 选项。
 
@@ -34,13 +32,13 @@ tags:
 
 rspack 项目依赖太多，内容太庞杂，可能产生影响的噪音元素也随之更多。已知 rspack 是通过 @napi/rs 编译为 .node 文件而被 js 方调用，所以我们首先要验证一个最简单的基于 @napi/rs 的项目能否正常 debug。
 
-首先使用 `napi`​命令初始化一个项目 `napi new`​
+首先使用 `napi`​ 命令初始化一个项目 `napi new`​
 
-> 什么？你还没有 napi 命令？先使用 `npm i @napi-rs/cli -g ​`​装一个吧，[官方文档](https://napi.rs/docs/introduction/getting-started)
+> 什么？你还没有 napi 命令？先使用 `npm i @napi-rs/cli -g ​`​ 装一个吧，[官方文档](https://napi.rs/docs/introduction/getting-started)
 
-在项目内根目录新建文件 `test.js`​，内容主要就是调一下`src/lib.rs`​里的方法即可。
+在项目内根目录新建文件 `test.js`​，内容主要就是调一下`src/lib.rs`​ 里的方法即可。
 
-例如 `lib.rs`​内容是
+例如 `lib.rs`​ 内容是
 
 ```rust
 #![deny(clippy::all)]
@@ -53,7 +51,7 @@ pub fn sum(a: i32, b: i32) -> i32 {
 }
 ```
 
-那么`test.js`​就是
+那么`test.js`​ 就是
 
 ```js
 import { sum } from "./index.js";
@@ -63,7 +61,7 @@ console.log(sum(1, 2));
 
 然后编写 debug 配置。
 
-新建文件 `.vscode/tasks.json`​内容如下：
+新建文件 `.vscode/tasks.json`​ 内容如下：
 
 ```json
 {
@@ -80,7 +78,7 @@ console.log(sum(1, 2));
 }
 ```
 
-新建文件 `.vscode/launch.json`​内容如下：
+新建文件 `.vscode/launch.json`​ 内容如下：
 
 ```json
 {
@@ -94,11 +92,11 @@ console.log(sum(1, 2));
       "preLaunchTask": "npm build:debug",
       "args": ["--inspect", "${file}"]
     }
-   ]
+  ]
 }
 ```
 
-之后在 `src/lib.rs`​的 sum 方法中打上断点。然后将当前窗口打开到`test.js`​后执行 debug 的 `debug rust`​ 选项。
+之后在 `src/lib.rs`​ 的 sum 方法中打上断点。然后将当前窗口打开到`test.js`​ 后执行 debug 的 `debug rust`​ 选项。
 
 没一会，控制台里输出了我们期待的结果 `3`​，却没有顺利进入断点。
 
@@ -114,11 +112,11 @@ lldb 启动 debug 的方式：`lldb -- node test.mjs`​
 
 回想 vscode 执行 debug 的工具链：
 
-vscode  ->  rust-analyzer -> lldb
+vscode -> rust-analyzer -> lldb
 
-既然 lldb 是好的，那下一步就应该验证一下 rust-analyzer 是否出了问题。验证方法也比较简单，我是对 lib.rs 执行 vscode 的命令: `rust-analyzer: Expand macro recursively`​ 发现返回内容是 `not available`​发现 rust-analyzer 可能不对劲。
+既然 lldb 是好的，那下一步就应该验证一下 rust-analyzer 是否出了问题。验证方法也比较简单，我是对 lib.rs 执行 vscode 的命令: `rust-analyzer: Expand macro recursively`​ 发现返回内容是 `not available`​ 发现 rust-analyzer 可能不对劲。
 
-你也可以直接在命令行里执行 `rust-analyzer --help`​结果我这里直接报错说 rust-analyzer 版本和我的系统不匹配（我是 m1）。
+你也可以直接在命令行里执行 `rust-analyzer --help`​ 结果我这里直接报错说 rust-analyzer 版本和我的系统不匹配（我是 m1）。
 
 于是我通过官网重新安装了 rust-analyzer。（上一个有问题的版本的 rust-analyzer 好像是通过 vscode 的插件安装进来的）
 
@@ -134,4 +132,4 @@ vscode  ->  rust-analyzer -> lldb
 
 ## 六、总结
 
-所以针对 napi/rs 在 vscode 中 debug 的问题，如果你按照教程安装了依赖、插件，声明了debug 配置，启动时仍然遇到无法 debug 的问题，建议检查一下 lldb 与 rust-analyzer 的版本是否匹配你的系统，如果不匹配，记得重新安装后重启下电脑喔！
+所以针对 napi/rs 在 vscode 中 debug 的问题，如果你按照教程安装了依赖、插件，声明了 debug 配置，启动时仍然遇到无法 debug 的问题，建议检查一下 lldb 与 rust-analyzer 的版本是否匹配你的系统，如果不匹配，记得重新安装后重启下电脑喔！
