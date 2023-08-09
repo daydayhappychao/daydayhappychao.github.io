@@ -6,8 +6,7 @@ tags:
 
 摘自：https://www.zhihu.com/question/30010198/answer/654264889
 
-1**. May I…?**
-
+**1. May I…?**
 我可以……吗？  
 常用句子：May I come in?  
 我可以进来吗？  
@@ -29,7 +28,7 @@ Can you do me a favor?
 Can you please tell me where is the bus stop?  
 你能告诉我公共汽车站怎么走吗？  
 功能：用于比较熟悉的人之间，会让对方感觉亲切。如果想再客  
-气一点，可以把can换成[could](https://www.zhihu.com/search?q=could&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A654264889%7D)。
+气一点，可以把 can 换成[could](https://www.zhihu.com/search?q=could&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A654264889%7D)。
 
 **3. I’d like to …**  
 我想……  
@@ -85,7 +84,7 @@ I think that could be helpful.
 我想那或许会有所帮助。  
 I think you are right.  
 我想你是对的。  
-搭配：接[宾语从句](https://www.zhihu.com/search?q=%E5%AE%BE%E8%AF%AD%E4%BB%8E%E5%8F%A5&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A654264889%7D)，that可以省略。  
+搭配：接[宾语从句](https://www.zhihu.com/search?q=%E5%AE%BE%E8%AF%AD%E4%BB%8E%E5%8F%A5&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A654264889%7D)，that 可以省略。  
 功能：在向别人陈述自己观点的时候，用这种语气会让人听起来  
 觉得比较自然、容易接受。
 
@@ -95,7 +94,7 @@ I think you are right.
 我衷心地希望你们能白头偕老。  
 I sincerely hope you can have a wonderful night.  
 我衷心地希望你们今晚能玩得开心。  
-搭配：接宾语从句，that可以省略。  
+搭配：接宾语从句，that 可以省略。  
 功能：较多地用于演讲时。也可用于一般的交流，显得祝福十分真诚。
 
 **9. Could I possibly ask you to…**  
@@ -113,10 +112,10 @@ Could I possibly ask you to take a picture for me?
 我恐怕得走了。  
 I’m afraid I cannot help you.  
 我恐怕帮不上你的忙。  
-搭配：接宾语从句，that可以省略。  
+搭配：接宾语从句，that 可以省略。  
 功能：用这个句型，即使是在拒绝别人的时候，也会让对方感觉  
 舒服一些。  
-Chapter two第二章祈使句、感叹句、特殊疑问句、祈使句
+Chapter two 第二章祈使句、感叹句、特殊疑问句、祈使句
 
 **11. Be…**  
 要……  
@@ -125,7 +124,7 @@ Chapter two第二章祈使句、感叹句、特殊疑问句、祈使句
 Be careful!  
 要小心一点！  
 搭配：可以接形容词，也可以接名词。  
-功能：这是祈使句的一种常见形式，表示提醒、警告等意思。如果想客气一些地表达你的意思，可以在前面加一个please。
+功能：这是祈使句的一种常见形式，表示提醒、警告等意思。如果想客气一些地表达你的意思，可以在前面加一个 please。
 
 **12. Don’t …**  
 不要……  
@@ -199,7 +198,7 @@ How interesting [the film is](https://www.zhihu.com/search?q=the%20film%20is&sea
 你认为故事情节会怎样变化？  
 功能：用于询问对方看法和意见，经常用于采访的时候。
 
-**18. What seems to be the ​**​****​**…?**  
+**18. What seems to be the ​**​\***\*​**…?\*\*  
 ……大概是什么问题？  
 常用句子：What seems to be the problem with your mother?  
 你妈妈怎么了？  
@@ -256,7 +255,7 @@ How come you never call me?
 How do you like your new job?  
 你觉得你的新工作怎么样？  
 How do you like my CD player?  
-你觉得我的CD机怎么样？  
+你觉得我的 CD 机怎么样？  
 搭配：接名词或动名词。  
 功能：用于询问别人对某事或某物的欣赏程度或看法。
 
@@ -272,7 +271,7 @@ Why do you think I am his younger brother?
 搭配：接陈述语气从句。  
 功能：可以换一种说法，同样表示疑虑的意思：“What makes  
 you think…”。  
-Chapter Three第三章情景句型
+Chapter Three 第三章情景句型
 
 致谢、道歉
 
@@ -338,7 +337,7 @@ Please don’t hesitate to ask me if you don’t understand.
 I heard from my neighbor the man who lived next to us was a cheat.  
 我听邻居说住在我们隔壁的那个男人是个骗子。  
 I heard Jenny had married a man who’s 20 years older than she.  
-我听说珍妮跟一个比她大20岁的男人结了婚。  
+我听说珍妮跟一个比她大 20 岁的男人结了婚。  
 搭配：接宾语从句。
 
 功能：这个句型经常用于平时的闲聊中，引述别人的话语。
@@ -387,7 +386,7 @@ I suggest that you spend more time reading.
 I suggest that you quit smoking.  
 我建议你把烟戒掉。  
 搭配：这个句型的完整结构是“I suggest that+人称+动词原型+其它”。  
-功能：最直接常用的建议方法。如果要表示否定，即“建议不要……”，在人称后加not就可以了。
+功能：最直接常用的建议方法。如果要表示否定，即“建议不要……”，在人称后加 not 就可以了。
 
 **35. You’d better…**  
 你最好……  
@@ -397,7 +396,7 @@ You’d better change your job.
 你最好换一份工作。  
 You’d better not make such a silly mistake again.  
 你最好不要再犯这种低级错误。  
-搭配：接动词原型，表示否定时在动词前加not.
+搭配：接动词原型，表示否定时在动词前加 not.
 
 **36. In my opinion, …**  
 在我看来，……  
@@ -422,7 +421,7 @@ As far as I’m concerned, he is the best teacher in the school.
 If I were you, I would have given up.  
 如果我是你，我早就放弃了。  
 搭配：接一个表示意愿的从句。  
-功能：这是虚拟语气中最常用的说法，要注意要用were，而不是was。
+功能：这是虚拟语气中最常用的说法，要注意要用 were，而不是 was。
 
 **39. If I did… , I would…**  
 如果我……，我会……  
@@ -430,7 +429,7 @@ If I were you, I would have given up.
 如果我知道真相，我就不会责备他了。  
 If I had his phone number, I would phone him immediately.  
 如果我知道他的电话号码，我会立刻给他打电话。  
-搭配: If I后面接动词的过去式，表示虚拟，后面一句表示意愿。
+搭配: If I 后面接动词的过去式，表示虚拟，后面一句表示意愿。
 
 **40. I wish…**  
 但愿……  
@@ -440,7 +439,7 @@ I wish I were a millionaire.
 我要是个百万富翁就好了。  
 I wish that beautiful girl were my girlfriend.  
 那个漂亮的女孩要是我女朋友就好了。  
-搭配：接过去时形式的从句，从句中be动词只能用were的形式。  
+搭配：接过去时形式的从句，从句中 be 动词只能用 were 的形式。  
 功能：：表达与事实相反或不太可能实现的愿望。
 
 **41. It’s time…**  
@@ -478,7 +477,7 @@ It is a pity that you couldn’t catch the train.
 功能：在别人遇到不顺心的事情的时候用这个句型，是很好的安  
 慰方式。
 
-**44.That… ​**​****​**.**  
+**44.That… ​**​\***\*​**.\*\*  
 ……似乎不太可能。  
 例句： That the beautiful girl agreed to be his girlfriend seems unlikely.  
 那个漂亮女孩似乎不太可能同意当他的女朋友。  
